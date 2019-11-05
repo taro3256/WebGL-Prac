@@ -8,7 +8,7 @@ function start() {
   gl = initWebGL(canvas);
   initShaders();
   initBuffers();
-  drawScene();
+  // drawScene();
   
   // WebGL を使用できる場合に限り、処理を継続
   
