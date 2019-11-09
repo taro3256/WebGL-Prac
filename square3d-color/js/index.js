@@ -1,4 +1,6 @@
-var cubeRotation = 5.0;
+var cubeRotation = 4.0;
+
+var rev = 5.0;
 
 main();
 
@@ -34,7 +36,20 @@ function main() {
     varying lowp vec4 vColor;
 
     void main() {
-      gl_FragColor = vColor;
+      if (gl_FragCoord.x > 320.0) {
+        if (gl_FragCoord.y > 240.0) {
+          gl_FragColor = vColor;
+        } else {
+          gl_FragColor = mix(vec4(1.0), vColor, 0.25);
+        }
+      } else {
+        // gl_FragColor = vec4(1.0-vColor.r, 1.0-vColor.g, 1.0-vColor.b, 1.0)*0.5;
+        if (gl_FragCoord.y > 240.0) {
+          gl_FragColor = mix(vec4(0.25,0.25,0.25,1.), vColor, 0.5);
+        } else {
+          gl_FragColor = mix(vec4(0.25,0.25,0.25,1.), vColor, 0.25);
+        }
+      }
     }
   `;
 
@@ -294,6 +309,10 @@ function drawScene(gl, programInfo, buffers, deltaTime) {
 
   // Update the rotation for the next draw
   cubeRotation += deltaTime;
+  if (cubeRotation > rev) {
+    cubeRotation -= 0.05;
+    rev += 1.0+0.01*rev;
+  }
 }
 
 // Initialize a shader program, so WebGL knows how to draw our data
